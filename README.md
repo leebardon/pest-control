@@ -11,7 +11,7 @@ Why?
 
 Basic idea - a webapp that lists universities that are currently hiring for faculty positions, or laying off staff. Based on teaching materials created by Eden Marco for his Udemy course "Real World Python Test Automantion with Pytest".
 
-## Setup Env
+### Setup Env
 
 Ensure pipenv is installed then run:
 
@@ -20,7 +20,7 @@ pipenv shell
 pipenv install pytest
 ```
 
-## Setup Django
+## Django
 
 Next, install Django and set up a basic Django application:
 
@@ -87,9 +87,45 @@ class UniversityAdmin(admin.ModelAdmin):
 
 You can then reload the server, and 'Universities' should be an option in your admin panel. You can add a university using your dfined attributes. Do so, and save. It will display as a "University object" in the list - not super useful.
 
-We need to add a "dunder" (double under) str function to our model and refresh the page, so we can display the object's name, rather then a generic reference:
+We need to add a "dunder" (double under) str function to our model and refresh the page, so we can display the object's name, rather then a generic reference. We can also include a type hint (->str) to make the code more readable.
 
 ```python
-def __str__(self):
-    return self.name
+def __str__(self)->str:
+    return f"{self.name}"
 ```
+
+## Creating the Rest API
+
+### Views
+
+Within the universities model folder, create a new file called 'serializers.py'. This will take the model from the database and serialise it into JSON format.
+
+Import the model, and also import the serializers module from rest_framework. Create a class and a Meta subclass telling Django which fields you want to serialize, so they can be displayed on the front end:
+
+```python
+class UniversitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = University
+        fields = ("id", "name", "status", "application_link", "last_update", "notes")
+```
+
+### Viewsets
+
+Within the universities model folder, open the views.py file and import ModelViewSet from rest_frameworks.viewsets. Create a class called UniversityViewSet, and have it inherit the Django ModelViewSets class. This basically implements a rest framework on our behalf (check out the class definition to see what it does specifically).
+
+We need to tell the class what we want to serialise, and also the queryset (i.e. what we want to return/view). We also want to specify pagination, so instead of getting a long list of a squillion objects that causes the server to time out, we can break the return into chunks, or return/render only a certain number, etc.
+
+```python
+class UniversityViewSet(ModelViewSet):
+    serializer_class = UniversitySerializer
+    queryset = University.objects.all().order_by("-last_update")
+    pagination_class = PageNumberPagination
+```
+
+The "objects.all()" syntax is Django's Object Relational Mapper syntax - an object oriented abstraction of the database, to communicate easily without having to write sql queries.
+
+### Configuring URL Routes (Controllers)
+
+Django makes this easy - when we created our ViewSets, it automatically created all the REST functions we need (GET, POST, DELETE, UPDATE, etc). We just need to tell it what endpoints we want to use.
+
+Create a file called urls.py.
