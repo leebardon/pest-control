@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import University
+from universities.models import University
 
 
 @admin.register(University)
