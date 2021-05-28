@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from universities.views import UniversityViewSet
+from api.pestcontrol.universities.views import UniversityViewSet
 
 
 universities_router = routers.DefaultRouter()
