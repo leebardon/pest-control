@@ -128,4 +128,4 @@ The "objects.all()" syntax is Django's Object Relational Mapper syntax - an obje
 
 Django makes this easy - when we created our ViewSets, it automatically created all the REST functions we need (GET, POST, DELETE, UPDATE, etc). We just need to tell it what endpoints we want to use.
 
-Create a file called urls.py.
+Create a file called urls.py. Here, we instantiate and register a Django DefaultRouter() class, and register it with a prefix, viewset, and basename.

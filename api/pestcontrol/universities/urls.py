@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from .views import UniversityViewSet
+from universities.views import UniversityViewSet
 
 
 universities_router = routers.DefaultRouter()

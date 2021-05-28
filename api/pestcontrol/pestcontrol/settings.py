@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "universities",
     "rest_framework",
+    "api.pestcontrol.universities",
 ]
 
 MIDDLEWARE = [
