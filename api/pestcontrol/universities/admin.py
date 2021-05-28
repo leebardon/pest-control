@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from universities.models import University
+from api.pestcontrol.universities.models import University
 
 
 @admin.register(University)
