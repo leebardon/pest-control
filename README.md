@@ -129,3 +129,46 @@ The "objects.all()" syntax is Django's Object Relational Mapper syntax - an obje
 Django makes this easy - when we created our ViewSets, it automatically created all the REST functions we need (GET, POST, DELETE, UPDATE, etc). We just need to tell it what endpoints we want to use.
 
 Create a file called urls.py. Here, we instantiate and register a Django DefaultRouter() class, and register it with a prefix, viewset, and basename.
+
+## Testing
+
+- Start with the empty case where we have no universities.
+- Test name should begin with what we are testing (test case "zero universites")
+- And should end with what we are asserting (returns empty list)
+- (Note that test cases will all return None, as we are just asserting, needs no return)
+- In this case, as it's a webapp, we use a client to test the calls and responses to and from our endpoints
+- import relevant client from Django
+- Create a test class and have it inherit the TestCase class from unittest
+
+```python
+from unittest import TestCase
+from django.test import Client
+from django
+
+class TestGetUniversities(TestCase):
+    def test_zero_universities_should_return_empty_list(self)->None:
+        client = Client()
+        response = client.get(universities_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content), [])
+```
+
+## PATHS!
+
+This can be extremely frustrating, especially in VSCode, and can cause a lot of issues with modules not being found. First, check current PYTHONPATH:
+
+```bash
+echo $PYTHONPATH
+```
+
+It might be empty. Add your base directory for the project overall, as well as the path to the specific module. For me, it looks like this:
+
+```bash
+export /Users/leebardon/Dropbox/Development/misc/learning-pytest/:/Users/leebardon/Dropbox/Development/misc/learning-pytest/api/pestcontrol/
+```
+
+We also need to install Django's test database (pipenv install pytest-django) for the tests to run in this environment. Every time we run the tests, pytest-django will create a "TEST DATABASE" according to our project's schema (i.e. from the migrations).
+
+WHY?
+
+1. NEVER MIX PRODUCTION DB WITH TEST DB
