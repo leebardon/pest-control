@@ -79,5 +79,29 @@ class TestPostUniversities(BasicUniversityAPITestCase):
         self.assertIn("VeryWrongIndeed", str(res.content))
         self.assertIn("is not a valid choice", str(res.content))
 
+    @pytest.mark.xfail
+    def test_should_b_ok_if_fails(self) -> None:
+        self.assertEqual(1, 2)
+
+    @pytest.mark.skip
+    def test_should_be_skipped(self) -> None:
+        self.assertEqual(1, 2)
+
+
+def raise_big_ole_exception() -> None:
+    raise ValueError("I'm a big ol' exception!")
+
+
+def test_raise_big_ole_exception_should_pass() -> None:
+    with pytest.raises(ValueError) as e:
+        raise_big_ole_exception()
+    assert "I'm a big ol' exception!" == str(e.value)
+
+
+def test_raise_big_ole_exception_should_pass() -> None:
+    with pytest.raises(ValueError) as e:
+        raise_big_ole_exception()
+    assert "I'm a big ol' exception!" == str(e.value)
+
 
 # self.assertEqual(first, second)
