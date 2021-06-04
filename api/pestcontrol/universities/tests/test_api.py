@@ -1,11 +1,12 @@
 import json
 import pytest
+import logging
 from unittest import TestCase
-
 from django.test import Client
 from django.urls import reverse
-
 from api.pestcontrol.universities.models import University
+
+logger = logging.getLogger("UNI_LOGS")
 
 
 @pytest.mark.django_db
@@ -104,4 +105,19 @@ def test_raise_big_ole_exception_should_pass() -> None:
     assert "I'm a big ol' exception!" == str(e.value)
 
 
-# self.assertEqual(first, second)
+def function_that_logs_stuff() -> None:
+    try:
+        raise ValueError("Exception Thymeeee")
+    except ValueError as e:
+        logger.warning(f"I'm logging {str(e)}")
+
+
+def test_logged_warning_level(caplog) -> None:
+    function_that_logs_stuff()
+    assert "I'm logging Exception Thymeeee" in caplog.text
+
+
+def test_logged_info_level(caplog) -> None:
+    with caplog.at_level(logging.INFO):
+        logger.info("Logging info level")
+        assert "Logging info level" in caplog.text
