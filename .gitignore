@@ -3,9 +3,15 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+*.vscode
+.sqlite3
+/api/pestcontrol/db.sqlite3
+/api/universities/db.sqlite3
+/api/db.sqlite3
+
 # Node artifact files
 node_modules/
-dist/
+dist/ 
 
 # Compiled Java class files
 *.class
