@@ -155,17 +155,32 @@ class TestGetUniversities(TestCase):
 
 ## PATHS!
 
-This can be extremely frustrating, especially in VSCode, and can cause a lot of issues with modules not being found. First, check current PYTHONPATH:
+This can be extremely frustrating, especially in VSCode, and can cause a lot of issues with modules not being found. 
+
+Indeed, I eventually moved to PyCharm for Python dev, for this reason. Pycharm makes it very simple to set the 'source'
+for your code / modules, and also the root of the project as a whole.
+
+For example, if you have:
+
+My-Project/
+    stuff/
+    more_stuff/
+    src/
+        models/
+        views/
+        controllers/
+    other_stuff
+
+-> Right click 'src' and select 'set directory as' ... 'source'
+-> Same for 'My-Project' but select 'root'
+
+Then, export the root of the project as your pythonpath:
 
 ```bash
-echo $PYTHONPATH
+export PYTHONPATH=/Users/leebardon/Dropbox/Development/misc/learning-pytest  
 ```
 
-It might be empty. Add your base directory for the project overall, as well as the path to the specific module. For me, it looks like this:
-
-```bash
-export /Users/leebardon/Dropbox/Development/misc/learning-pytest/:/Users/leebardon/Dropbox/Development/misc/learning-pytest/api/pestcontrol/
-```
+Now, things should just work, in terms of imports and testing. 
 
 We also need to install Django's test database (pipenv install pytest-django) for the tests to run in this environment. Every time we run the tests, pytest-django will create a "TEST DATABASE" according to our project's schema (i.e. from the migrations).
 
