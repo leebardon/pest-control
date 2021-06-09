@@ -185,7 +185,6 @@ You may also need to export django settings:
  export DJANGO_SETTINGS_MODULE=api.pestcontrol.pestcontrol.settings
  ```
 
-
 Now, things should just work, in terms of imports and testing. 
 
 We also need to install Django's test database (pipenv install pytest-django) for the tests to run in this environment. Every time we run the tests, pytest-django will create a "TEST DATABASE" according to our project's schema (i.e. from the migrations).
@@ -193,3 +192,30 @@ We also need to install Django's test database (pipenv install pytest-django) fo
 WHY?
 
 1. NEVER MIX PRODUCTION DB WITH TEST DB
+
+## Setting Up Continuous Integration
+
+We can set up a system whereby every time we push a commit to bitbucket, your tests will run automatcally, and 
+send a notification email (or even slack message) if something fails. 
+
+Go to pipelines in your repo on bitbucket. Option to generate a pipeline template yaml. Do that and pull it down 
+locally. 
+
+Set up a basic script like this - now every time you push, tests are run. Note that it's not good practice to include 
+env setup stuff in here - there a section for repo variables under 'pipelines'
+
+```python
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: 'pestcontrol Universities API test'
+          caches:
+            - pip
+          script:
+            - pip install pipenv --upgrade
+            - pipenv install --system
+            - export PYTHONPATH=$PYTHONPATH:$PYTHONPATH/api/pestcontrol
+            - export DJANGO_SETTINGS_MODULE=api.pestcontrol.pestcontrol.settings
+            - pytest api/pestcontrol -s -v --durations=0
+```

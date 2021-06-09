@@ -8,7 +8,7 @@ pipelines:
   default:
     - parallel:
       - step:
-          name: 'Django Universities API test'
+          name: 'pestcontrol Universities API test'
           caches:
             - pip
           script:
