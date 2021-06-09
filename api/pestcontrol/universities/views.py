@@ -4,6 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
+
 from api.pestcontrol.universities.serializers import UniversitySerializer
 from api.pestcontrol.universities.models import University
 
@@ -15,7 +16,7 @@ class UniversityViewSet(ModelViewSet):
 
 # ap_view decorator means to treat function as post endpoint
 @api_view(http_method_names=["POST"])
-def send_uni_email(request) -> Response:
+def send_uni_email(request:Response) -> Response:
     """
         sends email with request payload
         from: me@gmail.com
