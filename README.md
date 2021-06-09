@@ -180,6 +180,12 @@ Then, export the root of the project as your pythonpath:
 export PYTHONPATH=/Users/leebardon/Dropbox/Development/misc/learning-pytest  
 ```
 
+You may also need to export django settings:
+ ```bash
+ export DJANGO_SETTINGS_MODULE=api.pestcontrol.pestcontrol.settings
+ ```
+
+
 Now, things should just work, in terms of imports and testing. 
 
 We also need to install Django's test database (pipenv install pytest-django) for the tests to run in this environment. Every time we run the tests, pytest-django will create a "TEST DATABASE" according to our project's schema (i.e. from the migrations).
