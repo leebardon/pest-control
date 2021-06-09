@@ -18,8 +18,10 @@ from django.urls import path
 from django.urls.conf import include
 
 from api.pestcontrol.universities.urls import universities_router
+from api.pestcontrol.universities.views import send_uni_email
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(universities_router.urls)),
+    path("send-email/", send_uni_email),
 ]
