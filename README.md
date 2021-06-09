@@ -215,7 +215,5 @@ pipelines:
           script:
             - pip install pipenv --upgrade
             - pipenv install --system
-            - export PYTHONPATH=$PYTHONPATH:$PYTHONPATH/api/pestcontrol
-            - export DJANGO_SETTINGS_MODULE=api.pestcontrol.pestcontrol.settings
             - pytest api/pestcontrol -s -v --durations=0
 ```
